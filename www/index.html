@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src -->
+      
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">  -->
+        <!-- <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" /> -->
+        <meta http-equiv="Content-Security-Policy" content="default-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval' *; style-src	'self' 'unsafe-inline' *; img-src 'self' data: *">
+
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+        <link href="js/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="js/lib/bootstrap/css/bootstrap-theme.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/ajax-loader.css">
+        <link href="css/common.css" rel="stylesheet">
+        <link href="css/audit.css" rel="stylesheet">
+        <link href="css/forgotpassword.css" rel="stylesheet">
+        <link href="css/norms.css" rel="stylesheet">
+        <link href="js/lib/select2-4.0.1/dist/css/select2.css" rel="stylesheet">
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPx6WPrL00fBGgmWBP4feuXHpXKSduABM&sensor=false"></script>
+        <script type="text/javascript" data-main="js/main.js" src="js/lib/require-min.js"></script>
+        <script type="application/javascript" src="js/lib/iscroll.js"></script>
+        <!--<script type="text/javascript" src="js/utilities_web.js"></script>-->
+        <script type="text/javascript" src="js/utilities_mobile.js"></script>
+        <script type="application/javascript" src="js/localStorage/localStorage.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/assignedAuditTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/completedAuditTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/normTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/productTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/commonTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/categoryTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/sodTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/sgfTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/categoryChannelTable.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/categorySmartspotBrand.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/qrCodePnMap.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/mpd.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/queryComputeLogic.js"></script>
+        <script type="application/javascript" src="js/sqliteTables/errorLogTable.js"></script>
+
+
+
+        <script type="text/javascript" src="cordova.js"></script>
+        <title>Matrix</title>
+    </head>
+    <body>
+        <span class="timer_container" style="display:none;">
+            <span class="float-right"><img src="images/matrix_icons/timer.png" class="ico_24">
+            <span class="timer float-right"></span>
+           </span>
+        </span>
+
+
+        <div id="content" class="cover content animate"></div>
+
+        <div class="controls in_app_camera">
+            <!--<div class="close_camera_preview" id="close" (click)="close()">X</div>-->
+                  
+          <div id="camerablock" class="camerablock text-center">
+            <!-- <button class="btn-style"  id="start_flash" (click)="switchCameraButton()" ><img src="images/switch_camera_128.png" style="width: 30px;height: 30px;"> </button> -->
+            <button class="btn-camera" id="takePic"> <img src="images/take_picture_164.png" style="width: 40px;height: 40px;margin-left: 65px;"></button>
+            <button class="btn-style"  id="switch_camera" (click)="switchCameraButton()" ><img src="images/switch_camera_128.png" style="width: 30px;height: 30px;"> </button>
+            <div class="black_color"> Tap for photo</div>
+          </div>
+          <img id="capturedImage"  class="capturedImage" width="95%" height="200px" style="margin-left:2.5%; display: none;">
+          <div id="previewblock" class="previewblock" >
+            <button class="btn-style btn-crop" id="retryCamera"><img  class="btn_icon_camera" src="images/delete_photo_52.png"/>Retry</button>
+            <button class="btn-style btn-crop" id="confirmPreview"><img class="btn_icon_camera" src="images/confirm_photo_52.png" />Confirm</button>
+          </div> 
+          <!-- <div id="cropblock" class="previewblock" *ngIf="showCropview">
+            <button class="btn-style btn-crop" (click)="confirmCrop()"><img src="images/crop_photo_52.png" class="btn_icon_camera"/>Crop</button>
+            <button class="btn-style btn-crop" (click)="retrySnap()"><img src="images/retry_photo_52.png" class="btn_icon_camera"/>Retry</button>
+            <button class="btn-style btn-crop" (click)="rotateBase64Img()"><img src="images/rotate.png" class="btn_icon_camera"/>Rotate</button>
+          </div> -->
+          
+          <!-- <image-cropper
+              [imageBase64]="imageBase64"
+              [maintainAspectRatio]="false"
+              format="png"
+              (imageCropped)="imageCropped($event)"
+              (imageLoaded)="imageLoaded()"
+              (cropperReady)="cropperReady()"
+              (loadImageFailed)="loadImageFailed()"
+          ></image-cropper> -->
+          
+          </div>
+        <canvas id = 'canvas'></canvas>
+        <div class="loader-container"></div>
+    </body>
+</html>

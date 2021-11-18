@@ -1,0 +1,11 @@
+.norms .field_intent {
+    display: inline-block;
+/*    margin-right: 4.5%;
+*/  margin-top: 10px;
+	width: 26%;
+	margin: 10px 2%;
+    vertical-align: top;
+}
+.norms .col {
+	font-weight: bold;
+}
